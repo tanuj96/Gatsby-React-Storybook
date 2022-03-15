@@ -1,0 +1,274 @@
+.buttonPosition button.MuiButtonBase-root.MuiIconButton-root.Carousel-button-30.Carousel-buttonVisible-28.undefined {
+    top: calc(15% - 20px) !important;
+}
+
+.main.Carousel-buttonWrapper-26.Carousel-fullHeightHoverWrapper-27.Carousel-next-31 {
+    right: 40%;
+}
+
+.main.Carousel-buttonWrapper-26.Carousel-fullHeightHoverWrapper-27.Carousel-prev-32 {
+    left: 40%;
+}
+
+// body p {
+//     font-size: 1.15em;
+//     font-weight: 400;
+//     line-height: 1.5;
+// }
+
+body {
+    font-family: Georgia, Arial, Helvetica, sans-serif;
+    padding-right: 0px !important;
+    overflow:auto !important;
+}
+
+.selected {
+    border: 3px solid #000000;
+    background-color: #9A996E;
+    padding: 0px;
+}
+
+a {
+    text-decoration: none !important;
+}
+
+
+/********** search styles *************/
+.cmp-place-search {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+ul#results {
+    position: absolute;
+    background-color: #ededed;
+    margin-top: 0px;
+    top: 75px;
+    list-style-type: none;
+    line-height: 30px;
+    width: 30%;
+    padding: 15px;
+    cursor: pointer;
+    z-index: 999;
+    li{
+        font-family: sspro, arial;
+    }
+}
+
+.no-map {
+    min-width: 100px;
+}
+
+@media only screen and (min-width: 768px) {
+   
+    .no-map{
+        min-width: 400px;
+    }
+}
+
+div.whitebg{
+    input{
+      filter: grayscale(0) brightness(1.1)
+    }
+  }
+
+.input-wrapper {
+    width: 100%;
+    margin-bottom: 10px;
+    position: relative;
+    input#map-loc {
+        padding: 15px;
+        background-color: #f3f3f1;
+        border: none;
+        outline: none;
+        font-family: sspro, Arial;
+        font-weight: 100;
+        width: calc(100% - 0px);
+    }
+}
+.search-icon {
+    background-color: transparent!important;
+    position: absolute;
+    top: 30px;
+    right: 6px;
+}
+.cmp-static-map {
+    position: relative;
+    width: 100%;
+    background: #f3f3f1;
+    height: auto;
+    overflow: hidden;
+}
+.marker{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    animation: markerAnim 300ms ease-out;
+    z-index: 0;
+}
+main {
+    margin-top: 100px;
+}
+.enter-place{
+    font-family: sspro, Arial !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+}
+iframe {
+    width: 100%;
+    height: 100vh;
+}
+svg.MuiSvgIcon-root {
+    background-color: #d3cece;
+    border-radius: 50%;
+}
+
+/*************************** menu *****************/
+
+nav ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    position: relative;
+    display: flex;
+}
+.sub-menu li{
+    padding:5px 15px 5px 15px !important;
+    cursor: pointer;
+    float: left;
+    width: 100%;
+}
+.sub-menu li a{
+    padding:0px !important;
+    color:#000;
+}
+.sub-menu li a.active {
+    color: blue;
+    background-color: transparent;
+}
+.sub-menu li:hover{
+    background-color: #f3f3f3;
+}
+nav ul li{
+    display: inline-block;
+    background-color: #fff;
+    padding:10px
+}
+nav a{
+    display: block;
+    text-decoration: none;
+}
+nav ul li .active{
+    background-color: #f3f3f3;
+}
+/* Hide Dropdown by Default*/
+nav ul ul {
+    display: none;
+    position: absolute;
+    top: 67px;
+}
+nav a{
+    padding:6px !important;
+    display: flex;
+}
+nav li{
+    padding:15px 2px 15px 2px !important
+}
+.menu-item {
+    padding: 0px 30px;
+}
+/* hover */
+.menu-item li a:hover{
+    background-color: #f3f3f3;
+}
+.sub-menu li a:hover{
+    border:none;
+}
+/* Display Dropdown on Hover */
+ nav ul li a:hover > ul {
+    display: flex;
+    flex-direction: column;
+ }
+
+nav ul li a:focus-visible > ul{
+    display: flex;
+    flex-direction: column;
+
+}
+
+nav ul li :focus-within > ul{
+    display: block;
+   }
+
+/* Fisrt Tier Dropdown */
+nav ul ul li{
+    float: none;
+    display: list-item;
+    position: relative;
+
+}
+span.arrow {
+    height: 20px;
+}
+/* ============ Second, Third and More Tiers ===========*/
+nav ul ul ul li {
+    position: relative;
+    top: -60px;
+    left: 170px;
+}
+
+/* Change this in order to change the Dropdown symbol */
+
+
+.sub-menu{
+    box-shadow: 0px 4px 5px #000;
+    padding: 5px 0px 5px 0px;
+    background-color: #fff;
+    max-height: 450px;
+    overflow: auto;
+}
+
+
+.iframe-container {
+    position: relative;
+    width: 100%;
+}
+
+.iframe-container iframe {
+    position: relative;
+    top: 0;
+    left: 0;
+    border: 0;
+    width: 100%;
+    min-height: 350px;
+    height: 100%;
+}
+
+.carousel-main{
+    width:100%;
+    float:left;
+}
+@media only screen and (max-width: 768px) {
+    .buttonPosition button{
+        top:calc(15% - 20px) !important
+    }
+  }
+
+.focalHeight {
+    height: 100%;
+    width: 100%;
+}
+
+@media only screen and (max-width: 959px) {
+    .focalHeight {
+        height: 300px;
+    }
+    .active{
+        color:#6d6dff;
+      }
+  }

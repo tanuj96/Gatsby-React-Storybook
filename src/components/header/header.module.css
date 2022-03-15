@@ -1,0 +1,27 @@
+body {
+  margin: 0px;
+}
+.container {
+  background-color: rgba(2, 78, 67, 0.8);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  width: 100%;
+  position: fixed;
+  z-index: 999;
+  right: 0px;
+  top: 0px;
+  transition: 1s;
+}
+.classOne {
+  background-color: rgba(2, 78, 67, 0.8);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  width: 100%;
+  position: fixed;
+  z-index: 999;
+  right: -1225px;
+  top: 0px;
+  transition: 1s;
+}

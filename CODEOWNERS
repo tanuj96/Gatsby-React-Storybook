@@ -1,0 +1,18 @@
+[Database]
+# database/   @realogy/cartus/cartus-user-group/devops @realogy/cartus/cartus-user-group/dba
+# db/   @realogy/cartus/cartus-user-group/devops @realogy/cartus/cartus-user-group/dba
+.gitlab/mongo_param.json @realogy/cartus/cartus-user-group/dba
+
+[Devops]
+devops/ @realogy/cartus/cartus-user-group/devops
+.gilab/ @realogy/cartus/cartus-user-group/devops
+LICENSE @realogy/cartus/cartus-user-group/devops
+CODEOWNERS @realogy/cartus/cartus-user-group/devops
+.gitlab-ci.yml @realogy/cartus/cartus-user-group/devops
+
+[Devlead]
+# devdir/ @realogy/cartus/cartus-user-group/approvers/dev-lead
+# devfile.txt @realogy/cartus/cartus-user-group/approvers/dev-lead
+
+#Nothing below this line
+    

@@ -1,0 +1,214 @@
+#version:1.0.0
+#type:ui
+
+default:
+  image:
+    name: node:$IMAGE_VERSION
+
+cache:
+    paths: 
+        - node_modules/
+stages:
+  - TestRuns
+  - Build 
+  - Deploy_DEV
+  - Deploy_TST
+  - Deploy_STG
+  - Deploy_TRN
+  - Deploy_PRD 
+  - Deploy_DEV-AR 
+  - Deploy_TST-AR 
+  - Deploy_STG-AR
+  - Tag
+   
+UnitTest:
+  stage: TestRuns
+  environment: Development
+  script:
+    - apt-get update && apt-get install -y apt-transport-https ca-certificates curl gnupg --no-install-recommends
+    - curl -sSL https://dl.google.com/linux/linux_signing_key.pub | apt-key add - && echo "deb https://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google-chrome.list
+    - apt-get update && apt-get install -y google-chrome-stable fontconfig fonts-ipafont-gothic fonts-wqy-zenhei fonts-thai-tlwg fonts-kacst fonts-symbola fonts-noto ttf-freefont --no-install-recommends
+    - apt-get purge --auto-remove -y curl gnupg && rm -rf /var/lib/apt/lists/*
+    - apt-get update -y && apt-get install -y && apt-get install -y apt-utils && apt-get install -y --no-install-recommends apt-utils apt-get install -y default-jre && apt install -y iceweasel && apt install -y fonts-liberation && apt install -y libappindicator3-1 && apt install -y libxss1 && apt install -y lsb-release && apt install -y xdg-utils && apt install -y net-tools
+    -  apt-get update && apt-get install -y openjdk-8-jre-headless && apt-get install -y ca-certificates-java
+    - npm install -g --quiet
+    - npm install chromedriver
+    - npm install webdriver-manager
+    - npm install chromium
+    - npm install karma-cli --save-dev
+    - npm install karma-jasmine --save-dev
+    - npm install http-server
+    - npm install -g cross-env
+    - npm install geckodriver --save
+    - npm install firefox
+    - npm install get-firefox
+    - npm install karma-firefox-launcher
+    - npm install protractor
+    - node node_modules/protractor/bin/webdriver-manager update
+    - npm install
+    - npm run test    
+
+Build: 
+  stage: Build
+  script: 
+    - npm install              
+    - npm run build:$SCRIPT
+  artifacts:
+    paths:
+        - dist/**
+
+.s3_deploy:
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest 
+  script:
+    - aws s3 sync $LOCAL_PATH s3://$BUCKET_NAME --sse AES256
+
+.deploy_to_aws:
+  image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest 
+  after_script:
+    - echo "Cloudfront"
+    # - aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"
+
+Deploy_DEV: 
+  stage: Deploy_DEV
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /^feature\// || $CI_COMMIT_BRANCH =~ /^bugfix\// || $CI_COMMIT_BRANCH == "develop"'
+      when: manual
+  extends:
+    - .s3_deploy
+    - .deploy_to_aws
+  environment: Development
+  variables:
+    AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID_DEV01
+    AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY_DEV01
+
+Deploy_TST: 
+  stage: Deploy_TST
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH =~ /^release\//'
+      when: manual
+  extends:
+    - .s3_deploy
+    - .deploy_to_aws
+  environment: Test
+  variables:
+    AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID_TST01
+    AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY_TST01
+
+Deploy_STG: 
+  stage: Deploy_STG
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /^release\//'
+      when: manual
+  extends:
+    - .s3_deploy
+    - .deploy_to_aws
+  environment: Staging
+  variables:
+    AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID_STG01
+    AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY_STG01
+
+Deploy_TRN: 
+  stage: Deploy_TRN
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /^release\//'
+      when: manual
+  extends:
+    - .s3_deploy
+    - .deploy_to_aws
+  environment: Training
+  variables:
+    AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID_TRN01
+    AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY_TRN01
+
+Deploy_PRD:
+  stage: Deploy_PRD
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      when: manual
+  extends:
+    - .s3_deploy
+    - .deploy_to_aws
+  environment: Production
+  variables:
+    AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID_PRD01
+    AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY_PRD01
+
+Deploy_DEV-AR: 
+  stage: Deploy_DEV-AR
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /^hotfix\//'
+      when: manual
+  extends:
+    - .s3_deploy
+    - .deploy_to_aws
+  environment: DevelopmentAR
+  variables:
+    AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID_DEV01
+    AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY_DEV01
+
+Deploy_TST-AR: 
+  stage: Deploy_TST-AR
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /^hotfix\//'
+      when: manual
+  extends:
+    - .s3_deploy
+    - .deploy_to_aws
+  environment: TestAR
+  variables:
+    AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID_TST01
+    AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY_TST01
+
+Deploy_STG-AR: 
+  stage: Deploy_STG-AR
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /^hotfix\//'
+      when: manual
+  extends:
+    - .s3_deploy
+    - .deploy_to_aws
+  environment: StagingAR
+  variables:
+    AWS_ACCESS_KEY_ID: $AWS_ACCESS_KEY_ID_STG01
+    AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY_STG01
+
+.Versioning_image:
+  image: $BASH_IMAGE
+  script: 
+    - bash ./DevOps/$FILE_NAME
+
+Release_Tag:
+  extends: 
+    - .Versioning_image 
+  stage: Tag
+  variables:
+    FILE_NAME: release_version_update.sh
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /^release\//'
+
+Hotfix_Tag:
+  extends: 
+    - .Versioning_image 
+  stage: Tag
+  variables:
+    FILE_NAME: hotfix_patch_update.sh
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /^hotfix\//'
+
+Feature_Tag:
+  extends: 
+    - .Versioning_image 
+  stage: Tag
+  variables:
+    FILE_NAME: feature_patch_update.sh
+  rules:
+    - if: '$CI_COMMIT_BRANCH =~ /^feature\//'
+
+Develop_Tag:
+  extends: 
+    - .Versioning_image 
+  stage: Tag
+  variables:
+    FILE_NAME: minor_update.sh
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "develop"'

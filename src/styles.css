@@ -1,0 +1,147 @@
+.buttonPosition button.MuiButtonBase-root.MuiIconButton-root.Carousel-button-30.Carousel-buttonVisible-28.undefined {
+  top: calc(15% - 20px) !important;
+}
+
+.main.Carousel-buttonWrapper-26.Carousel-fullHeightHoverWrapper-27.Carousel-next-31 {
+  right: 40%;
+}
+
+.main.Carousel-buttonWrapper-26.Carousel-fullHeightHoverWrapper-27.Carousel-prev-32 {
+  left: 40%;
+}
+
+body p {
+  font-size: 1.15em;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+body {
+  font-family: Georgia, Arial, Helvetica, sans-serif;
+}
+
+.selected {
+  border: 3px solid #000000;
+  background-color: #9A996E;
+  padding: 0px;
+}
+
+a {
+  text-decoration: none !important;
+}
+
+/********** search styles *************/
+.cmp-place-search {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+ul#results {
+  position: absolute;
+  background-color: #ededed;
+  margin-top: 0px;
+  top: 67px;
+  list-style-type: none;
+  line-height: 30px;
+  width: 30%;
+  padding: 15px;
+  cursor: pointer;
+  z-index: 999;
+}
+
+ul#results li {
+  font-family: sspro, arial;
+}
+
+.no-map ul#results{
+  width: 100%;
+}
+
+
+.input-wrapper {
+  width: 80%;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.input-wrapper input#map-loc {
+  padding: 15px 40px 15px 15px;
+  background-color: #f3f3f1;
+  border: none;
+  outline: none;
+  font-family: sspro, Arial;
+  font-weight: 100;
+  width: calc(100% - 0px);
+}
+
+
+
+.no-map .input-wrapper{
+  width: 100%;
+}
+
+.search-icon {
+  background-color: transparent !important;
+  position: absolute;
+  top: 30px;
+  right: 6px;
+}
+
+.cmp-static-map {
+  position: relative;
+  width: 100%;
+  background: #f3f3f1;
+  height: auto;
+  overflow: hidden;
+}
+
+.marker {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  width: 30px;
+  -webkit-animation: markerAnim 300ms ease-out;
+          animation: markerAnim 300ms ease-out;
+  z-index: 0;
+}
+
+main {
+  margin-top: 100px;
+}
+
+.enter-place {
+  font-family: sspro, Arial !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+}
+
+iframe {
+  width: 100%;
+  height: 100vh;
+}
+
+svg.MuiSvgIcon-root {
+  background-color: #d3cece;
+  border-radius: 50%;
+}
+
+@media only screen and (max-width: 768px) {
+  .buttonPosition button {
+    top: calc(15% - 20px) !important;
+  }
+}
+/*# sourceMappingURL=styles.css.map */
