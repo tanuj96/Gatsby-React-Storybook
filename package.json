@@ -15,7 +15,9 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\"",
     "search-util": "node search-util.mjs",
     "lint": "eslint",
-    "sonar": "sonar-scanner"
+    "sonar": "sonar-scanner",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@contentful/rich-text-react-renderer": "^14.1.2",
@@ -59,6 +61,13 @@
   "devDependencies": {
     "@babel/core": "^7.15.5",
     "@babel/eslint-parser": "^7.15.7",
+    "@storybook/addon-actions": "^6.4.19",
+    "@storybook/addon-essentials": "^6.4.19",
+    "@storybook/addon-interactions": "^6.4.19",
+    "@storybook/addon-links": "^6.4.19",
+    "@storybook/react": "^6.4.19",
+    "@storybook/testing-library": "^0.0.9",
+    "babel-loader": "^8.2.3",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-react-app": "^6.0.0",
@@ -66,6 +75,7 @@
     "eslint-plugin-jsx-a11y": "^6.4.1",
     "eslint-plugin-react": "^7.26.0",
     "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-storybook": "^0.5.7",
     "prettier": "2.4.1"
   },
   "repository": {

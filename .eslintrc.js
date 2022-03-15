@@ -6,10 +6,7 @@ module.exports = {
     browser: true,
     es2021: true
   },
-  extends: [
-    'plugin:react/recommended',
-    'airbnb'
-  ],
+  extends: ["plugin:react/recommended", "airbnb", "plugin:storybook/recommended"],
   parserOptions: {
     ecmaFeatures: {
       jsx: true
@@ -18,13 +15,11 @@ module.exports = {
     sourceType: 'module',
     parser: 'babel-eslint'
   },
-  plugins: [
-    'react'
-  ],
+  plugins: ['react'],
   rules: {
     'linebreak-style': 0,
     'comma-dangle': ['error', 'never'],
-    'react/prop-types': 0
-    // 'import/no-cycle': ['error', { maxDepth: 10 }]
+    'react/prop-types': 0 // 'import/no-cycle': ['error', { maxDepth: 10 }]
+
   }
 };
