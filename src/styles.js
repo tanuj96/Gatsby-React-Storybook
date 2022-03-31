@@ -159,7 +159,7 @@ export const customeTheme = (data) => createTheme({
     },
     subtitle1: {
       fontFamily: `${data?.typography?.bodyFontFamily}` || 'Georgia, Arial, Helvetica, sans-serif',
-      fontSize: '1em',
+      fontSize: `${data?.typography?.bodyFontSize}em` || '1em',
       fontWeight: '700',
       lineHeight: '1.6'
     }

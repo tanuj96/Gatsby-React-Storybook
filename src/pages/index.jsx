@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { graphql } from 'gatsby';
 import { navigate } from 'gatsby-link';
 import { useLocation } from '@reach/router';
-import { Helmet } from 'react-helmet';
 import Layout from '../components/layout';
 import DynamicComponent from '../utils/dynamic-component';
 import ScrollToTop from '../components/scroll-up/scrollUp';
@@ -74,9 +73,6 @@ export default function Home({ pageContext, data }) {
         >
           {data.contentfulPartnerSite.homePage.seo?.pageTitle}
         </h1>
-        <Helmet>
-          <meta name="icon" href="../../static/DynamicFavIcon.ico" />
-        </Helmet>
         {
             /* Print all Component Names */
             // eslint-disable-next-line max-len
@@ -1011,12 +1007,3 @@ export const query = graphql`
     }
   }
 `;
-
-
-// favIcon {
-//   favIcon {
-//   file {
-//   url
-//   }
-//   }
-//   }

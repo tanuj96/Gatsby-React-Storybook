@@ -37,7 +37,6 @@ export const richTextStyles = makeStyles(() => ({
       lineHeight: '1.5'
     },
     '& p': {
-      fontSize: `${data?.typography?.bodyFontSize}em` || '1em',
       fontWeight: '400',
       lineHeight: '1.5'
     }

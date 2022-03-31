@@ -44,6 +44,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             contentType
             fileName
           }
+          description
         }
         menus {
           id
@@ -339,14 +340,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         footerTextColor
         footerLinkColor
         svgIconColor
-        customHeadingFont {
-          fontFamilyName
-          fontUrl {
-            file {
-              url
-            }
-          }
-        }
       }
       astThemeTypography {
         astFontFamily
@@ -398,6 +391,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             file {
               url
             }
+            description
           }
           internal {
             content
@@ -414,6 +408,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             file {
               url
             }
+            description
           }
           internal {
             content
@@ -437,6 +432,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
               file {
                 url
               }
+              description
             }
             label
           }
@@ -459,12 +455,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const fs = require('fs');
   const https = require('https');
 
-  // const url = `https:${query?.data?.contentfulPartnerTheme?.typography?.customHeadingFont?.fontUrl[0].file.url}`;
   const url = `https:${query?.data?.contentfulPartnerTheme?.favIcon?.favIcon.file.url}`;
   https.get(url, (res) => {
-    // const fontPath = `${__dirname}/static/${query?.data.contentfulPartnerTheme?.typography?.customHeadingFont.fontFamilyName}.otf`;
-    // const filePath = fs.createWriteStream(fontPath);
-
     const favIconPath = `${__dirname}/static/favicon.ico`;
     const favIconPathBuild = `${__dirname}/public/favicon.ico`;
     const filePath = fs.createWriteStream(favIconPath);
@@ -482,7 +474,7 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
       console.log('Download Completed in Build');
     });
   });
-  
+
   const sitemapLinks = [];
 
   // Adding Homepage to Sitemap Links
@@ -886,21 +878,3 @@ exports.onPostBuild = async ({ reporter }) => {
   await searchIndexing(reporter, searchablePages);
   reporter.info('Your Gatsby site has been built!');
 };
-
-
-// favIcon{
-//   favIcon{
-//     file{
-//       url
-//     }
-//   }
-// }
-
-// customHeadingFont {
-//   fontFamilyName
-//   fontUrl {
-//     file {
-//       url
-//     }
-//   }
-// }
