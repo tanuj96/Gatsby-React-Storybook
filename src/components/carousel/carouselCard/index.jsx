@@ -51,7 +51,7 @@ const CarouselCard = ({ item }) => {
         <section className={classes.noHeaderContentArea}>
           <img
             src={item.url}
-            alt="img"
+            alt={item?.imageAltText}
             className={classes.mobileImageAlignment}
           />
 

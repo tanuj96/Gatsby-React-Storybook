@@ -58,7 +58,7 @@ export default function BuySell({ data, context }) {
                 <Link component="span" onClick={() => handleOperationType(path.hasBuy, path.hasSell)} to={(path.hasBuy && path.hasSell) ? '/signup/basic-militarylender' : ((path.hasBuy && !path.hasSell) ? '/signup/buy/buy-location' : '/signup/sell/sell-location')}>
                   <Card className={classes.singIncard}>
                     <CardContent>
-                      <img className={classes.cardImg} src={`https:${path.image.file.url}`} alt="card images" />
+                      <img className={classes.cardImg} src={`https:${path.image.file.url}`} alt={path?.image?.description} />
                       <Typography variant="h4" className={classes.cardText}>{path.label}</Typography>
                     </CardContent>
                   </Card>

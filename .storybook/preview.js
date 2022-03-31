@@ -1,3 +1,9 @@
+
+import { muiTheme } from 'storybook-addon-material-ui'
+
+// import theme1 from './src/theme/theme1'
+import { cardStyles } from '../src/components/link-card/styles';
+
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
   controls: {
@@ -7,3 +13,7 @@ export const parameters = {
     },
   },
 }
+
+export const decorators = [
+	muiTheme([cardStyles])
+];

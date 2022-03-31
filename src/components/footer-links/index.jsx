@@ -31,7 +31,7 @@ export default function FooterLinks({ data }) {
               const isNewTab = link.link.openInANewTab ? 'blank' : '';
               return (
                 <Grid item key={link.link.id}>
-                  <Link to={!link.link.openInANewTab ? `/${link.link.referenceToPage?.pageName}` : `${link.link.url}`} target={isNewTab} className={classes.links}>{link.label}</Link>
+                  <Link aria-label={link.label} to={!link.link.openInANewTab ? `/${link.link.referenceToPage?.pageName}` : `${link.link.url}`} target={isNewTab} className={classes.links}>{link.label}</Link>
                 </Grid>
               );
             })}

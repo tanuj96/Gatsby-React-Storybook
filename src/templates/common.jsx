@@ -4,15 +4,14 @@ import DynamicComponent from '../utils/dynamic-component';
 import Layout from '../components/layout';
 import ScrollToTop from '../components/scroll-up/scrollUp';
 import SEO from '../components/seo-component/seo';
-import LoginPage from '../pages/login';
 
 export default function CommonPage({ pageContext, data }) {
   const [user, setUser] = useState({});
 
-  const loginUser = () => {
-    localStorage.setItem('user', JSON.stringify(true));
-    window.location.reload();
-  };
+  // const loginUser = () => {
+  //   localStorage.setItem('user', JSON.stringify(true));
+  //   window.location.reload();
+  // };
 
   const logoutUser = () => {
     localStorage.setItem('user', JSON.stringify(false));
@@ -26,25 +25,30 @@ export default function CommonPage({ pageContext, data }) {
 
   return (
     <>
-      { ((pageContext.appData.siteType === 'rmr') || user) ? (
-        <Layout
-          partnerCode={pageContext.partnerCode}
-          navigation={pageContext.appData.navigation}
-          footer={pageContext.appData.siteFooter}
-          styles={pageContext.theme}
-          contactFormDetails={pageContext.appData.contactUsFormDetails}
-          siteType={pageContext.appData.siteType}
-          logout={logoutUser}
-          metadata={pageContext.theme.partnerMetaData}
-          searchEnabled={pageContext.appData.enableSearch}
-          astEnabled={pageContext.appData.hasAgentSelectionToolAstRequired}
+      <Layout
+        partnerCode={pageContext.partnerCode}
+        navigation={pageContext.appData.navigation}
+        footer={pageContext.appData.siteFooter}
+        styles={pageContext.theme}
+        contactFormDetails={pageContext.appData.contactUsFormDetails}
+        siteType={pageContext.appData.siteType}
+        logout={logoutUser}
+        metadata={pageContext.theme.partnerMetaData}
+        searchEnabled={pageContext.appData.enableSearch}
+        astEnabled={pageContext.appData.hasAgentSelectionToolAstRequired}
+      >
+        <SEO
+          title={data.contentfulPageTemplate.seo?.pageTitle}
+          description={data.contentfulPageTemplate.seo?.pageDescription}
+          metaKeywords={data.contentfulPageTemplate.seo?.metaKeywords}
+        />
+        <h1 style={{
+          position: 'absolute', width: '1px', height: '1px', padding: 0, margin: -'1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0
+        }}
         >
-          <SEO
-            title={data.contentfulPageTemplate.seo?.pageTitle}
-            description={data.contentfulPageTemplate.seo?.pageDescription}
-            metaKeywords={data.contentfulPageTemplate.seo?.metaKeywords}
-          />
-          {
+          {data?.contentfulPartnerSite?.homePage?.seo?.pageTitle}
+        </h1>
+        {
           /* Print all Component Names */
           // eslint-disable-next-line max-len
           data.contentfulPageTemplate?.components
@@ -55,11 +59,8 @@ export default function CommonPage({ pageContext, data }) {
               </section>
             ))
         }
-          <ScrollToTop />
-        </Layout>
-      ) : (
-        <LoginPage isLogin={user} login={loginUser} />
-      )}
+        <ScrollToTop />
+      </Layout>
     </>
   );
 }
@@ -203,6 +204,7 @@ export const query = graphql`
         contentType
         fileName
       }
+      description
     }
     isCtaButtonEnabled
     button {
@@ -372,6 +374,7 @@ export const query = graphql`
       file {
         url
       }
+      description
     }
     sys {
       type
@@ -599,6 +602,7 @@ export const query = graphql`
           file {
             url
           }
+          description
         }
         contentAlignment
         overlayAlignment
@@ -655,6 +659,7 @@ export const query = graphql`
       file {
         url
       }
+      description
     }
     quoteItems {
       attributeText

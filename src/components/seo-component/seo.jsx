@@ -6,6 +6,8 @@ export default function SEO({
 }) {
   return (
     <Helmet title={title}>
+      <title>{title}</title>
+      <meta charset="UTF-8" name="language" content="en" />
       <meta name="description" content={description} />
       <meta name="keywords" content={metaKeywords} />
       {title && <meta property="og:title" content={title} />}

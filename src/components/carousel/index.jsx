@@ -6,10 +6,12 @@ import { useMediaQuery, createTheme } from '@material-ui/core';
 import CarouselCard from './carouselCard';
 import '../../styles.scss';
 import ThemeContext from '../../utils/theme-context';
+import { useStyles } from './styles';
 
 function CarouselImage({ data }) {
   const { frames } = data;
   const partnerTheme = useContext(ThemeContext);
+  const classes = useStyles(partnerTheme);
   const items = [];
   frames.map((frame) => items.push({
     name: frame.heading,
@@ -21,7 +23,8 @@ function CarouselImage({ data }) {
     imageAlignment: 'imageAlignmentFlextStart',
     align: frame.overlayAlignment === 'Left align' ? 'flex-start' : 'flex-end',
     color: 'secondary',
-    textData: frame
+    textData: frame,
+    imageAltText: frame.image.description
   }));
   const theme = createTheme({});
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));

@@ -27,6 +27,7 @@ module.exports = {
     'gatsby-plugin-image',
     'gatsby-plugin-offline',
     'gatsby-theme-material-ui',
+    'gatsby-plugin-node-reload',
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
@@ -36,7 +37,7 @@ module.exports = {
         background_color: '#f7f0eb',
         theme_color: '#a2466c',
         display: 'standalone',
-        icon: 'static/favicon.ico'
+        icon: './static/favicon.ico'
       }
     },
     {

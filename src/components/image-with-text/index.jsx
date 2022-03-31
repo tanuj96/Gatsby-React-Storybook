@@ -27,7 +27,7 @@ export default function ImageWithText({ data }) {
                     <img
                       className={classes.mainImage}
                       src={data.image.file.url}
-                      alt={filename}
+                      alt={data.image.description}
                     />
                   </div>
                 )}

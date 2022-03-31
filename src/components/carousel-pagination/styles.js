@@ -33,12 +33,12 @@ export const customStyles = makeStyles((theme) => ({
   arrowButton: () => ({
     backgroundColor: 'red'
   }),
-  slideNumber: () => ({
+  slideNumber: (data) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    fontFamily: 'Georgia, Arial, Helvetica, sans-serif',
-    fontSize: '16px'
+    fontFamily: data?.typography?.bodyFontFamily || 'Georgia, Helvetica Neue, Arial, sans-serif',
+    fontSize: `${data?.typography?.bodyFontSize}em` || '1em'
   }),
   cardText: () => ({
     [theme.breakpoints.down('xs')]: {

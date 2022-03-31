@@ -88,7 +88,7 @@ export default function Links({ menuData }) {
                 return (
                   <Accordion className={classes.accordian} key={menuItem.id}>
                     <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
+                      expandIcon={menuItem.menuItems && (<ExpandMoreIcon />)}
                       aria-controls="panel1a-content"
                       aria-label={menuItem.menuLabel}
                       id="panel1a-header"

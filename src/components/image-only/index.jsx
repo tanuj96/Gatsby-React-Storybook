@@ -19,7 +19,7 @@ export default function ImageOnly({ data }) {
       justifyContent="center"
       alignItems="center"
     >
-      <img src={data?.image?.file?.url} alt={filename} className={classes.root} />
+      <img src={data?.image?.file?.url} alt={data.image.description} className={classes.root} />
     </Grid>
   );
 }

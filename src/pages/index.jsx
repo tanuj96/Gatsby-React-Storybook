@@ -1,54 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import { graphql } from 'gatsby';
 import { navigate } from 'gatsby-link';
+import { useLocation } from '@reach/router';
+import { Helmet } from 'react-helmet';
 import Layout from '../components/layout';
 import DynamicComponent from '../utils/dynamic-component';
 import ScrollToTop from '../components/scroll-up/scrollUp';
-import LoginPage from './login';
 import SEO from '../components/seo-component/seo';
-import { useLocation } from '@reach/router';
 
 export default function Home({ pageContext, data }) {
   const [user, setUser] = useState({});
-  const location= useLocation();
+  const location = useLocation();
 
-  const loginUser = () => {
-    localStorage.setItem('user', JSON.stringify(true));
-    window.location.reload();
-  };
+  // const loginUser = () => {
+  //   localStorage.setItem('user', JSON.stringify(true));
+  //   window.location.reload();
+  // };
 
   const logoutUser = () => {
     localStorage.setItem('user', JSON.stringify(false));
     window.location.reload();
   };
 
-  const capitalizeKey=(key)=>{
-  return  key.split("_").map((word,index)=>{
-      return index? word.charAt(0).toUpperCase()+ word.slice(1) : word;
-    }).join("");
-  }
+  const capitalizeKey = (key) => key.split('_').map((word, index) => (index ? word.charAt(0).toUpperCase() + word.slice(1) : word)).join('');
 
-  const getQueryParams = (search) => {
-    return decodeURI(search)
-      .replace('?', '')
-      .split('&')
-      .map(param => param.split('='))
-      .reduce((values, [key, value]) => {
-      if(key) { if(key=="campaign_operator" || key=="campaignoperator" || key=="utm_campaignoperator"){ key= "utm_campaign_operator" }else if(key=="master_campaign" || key=="utm_mastercampaign" || key=="mastercampaign"){key="utm_master_campaign"} values[capitalizeKey(key)] = value;}
-        return values
-      }, {})
-  } 
+  const getQueryParams = (search) => decodeURI(search)
+    .replace('?', '')
+    .split('&')
+    .map((param) => param.split('='))
+    .reduce((values, [key, value]) => {
+      if (key) { if (key == 'campaign_operator' || key == 'campaignoperator' || key == 'utm_campaignoperator') { key = 'utm_campaign_operator'; } else if (key == 'master_campaign' || key == 'utm_mastercampaign' || key == 'mastercampaign') { key = 'utm_master_campaign'; } values[capitalizeKey(key)] = value; }
+      return values;
+    }, {});
 
   useEffect(() => {
     const getUTM = JSON.parse(localStorage.getItem('utm'));
-    
-    let urlsParams= getQueryParams(location.search);
-    if(urlsParams && Object.keys(urlsParams).length){
-      if(JSON.stringify(getUTM)!== JSON.stringify(urlsParams)){         
+
+    const urlsParams = getQueryParams(location.search);
+    if (urlsParams && Object.keys(urlsParams).length) {
+      if (JSON.stringify(getUTM) !== JSON.stringify(urlsParams)) {
         localStorage.setItem('utm', JSON.stringify(urlsParams));
       }
     }
-  }, [location.search])
+  }, [location.search]);
 
   useEffect(() => {
     const getUser = JSON.parse(localStorage.getItem('user'));
@@ -57,40 +51,46 @@ export default function Home({ pageContext, data }) {
 
   return (
     <>
-      {((data.contentfulPartnerSite.siteType === 'rmr') || user) ? (
-        <Layout
-          partnerCode={pageContext.partnerCode}
-          navigation={data.contentfulPartnerSite.navigation}
-          styles={data.contentfulPartnerTheme}
-          footer={data.contentfulPartnerSite.siteFooter}
-          metadata={data.contentfulPartnerTheme.partnerMetaData}
-          contactFormDetails={data.contentfulPartnerSite.contactUsFormDetails}
-          logout={logoutUser}
-          siteType={data.contentfulPartnerSite.siteType}
-          searchEnabled={data.contentfulPartnerSite.enableSearch}
-          astEnabled={data.contentfulPartnerSite.hasAgentSelectionToolAstRequired}
+      <Layout
+        partnerCode={pageContext.partnerCode}
+        navigation={data.contentfulPartnerSite.navigation}
+        styles={data.contentfulPartnerTheme}
+        footer={data.contentfulPartnerSite.siteFooter}
+        metadata={data.contentfulPartnerTheme.partnerMetaData}
+        contactFormDetails={data.contentfulPartnerSite.contactUsFormDetails}
+        logout={logoutUser}
+        siteType={data.contentfulPartnerSite.siteType}
+        searchEnabled={data.contentfulPartnerSite.enableSearch}
+        astEnabled={data.contentfulPartnerSite.hasAgentSelectionToolAstRequired}
+      >
+        <SEO
+          title={data.contentfulPartnerSite.homePage.seo?.pageTitle}
+          description={data.contentfulPartnerSite.homePage.seo?.pageDescription}
+          metaKeywords={data.contentfulPartnerSite.homePage.seo?.metaKeywords}
+        />
+        <h1 style={{
+          position: 'absolute', width: '1px', height: '1px', padding: 0, margin: -'1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0
+        }}
         >
-          <SEO
-            title={data.contentfulPartnerSite.homePage.seo?.pageTitle}
-            description={data.contentfulPartnerSite.homePage.seo?.pageDescription}
-            metaKeywords={data.contentfulPartnerSite.homePage.seo?.metaKeywords}
-          />
-          {
+          {data.contentfulPartnerSite.homePage.seo?.pageTitle}
+        </h1>
+        <Helmet>
+          <meta name="icon" href="../../static/DynamicFavIcon.ico" />
+        </Helmet>
+        {
             /* Print all Component Names */
             // eslint-disable-next-line max-len
             data.contentfulPartnerSite?.homePage?.components
               .filter((component) => component?.sys?.contentType?.sys?.id)
               .map((component) => (
                 <section key={component.id}>
-                  {DynamicComponent(component.sys.contentType.sys.id, component, pageContext.partnerCode)}
+                  {DynamicComponent(component.sys.contentType.sys.id,
+                    component, pageContext.partnerCode)}
                 </section>
               ))
           }
-          <ScrollToTop />
-        </Layout>
-      ) : (
-        <LoginPage isLogin={user} login={loginUser} />
-      )}
+        <ScrollToTop />
+      </Layout>
     </>
   );
 }
@@ -168,6 +168,7 @@ export const query = graphql`
             contentType
             fileName
           }
+          description
         }
         menus {
           id
@@ -465,6 +466,7 @@ export const query = graphql`
         file {
           url
         }
+        description
       }
       contentAlignment
       overlayAlignment
@@ -523,6 +525,7 @@ export const query = graphql`
         contentType
         fileName
       }
+      description
     }
     isCtaButtonEnabled
     button {
@@ -621,6 +624,7 @@ export const query = graphql`
       file {
         url
       }
+      description
     }
     quoteItems {
       attributeText
@@ -682,6 +686,7 @@ export const query = graphql`
       file {
         url
       }
+      description
     }
     sys {
       type
@@ -932,11 +937,13 @@ export const query = graphql`
        file {
          url
        }
+       description
      }
      bannerLogo {
        file {
          url
        }
+       description
      }
    }
   fragment compContainer on ContentfulCompContainer {
@@ -1004,3 +1011,12 @@ export const query = graphql`
     }
   }
 `;
+
+
+// favIcon {
+//   favIcon {
+//   file {
+//   url
+//   }
+//   }
+//   }

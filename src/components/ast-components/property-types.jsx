@@ -110,7 +110,7 @@ export default function PropertyTypes({ data, context }) {
               >
                 <Card component="button" tabIndex="0" className={clsx(classes.singIncard, isActive && (code.includes(type.code)) ? 'selected' : '')}>
                   <CardContent>
-                    <img className={classes.cardImg} src={`https:${type.icon.file.url}`} alt="" />
+                    <img className={classes.cardImg} src={`https:${type.icon.file.url}`} alt={type?.icon?.description} />
                     <Typography variant="h4" className={classes.cardText}>{type.label}</Typography>
                   </CardContent>
                 </Card>

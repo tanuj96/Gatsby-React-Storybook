@@ -24,7 +24,7 @@ export default function Banner({ data }) {
 
   return (
     <div className={classes.root}>
-      <img src={data.bannerImage.file.url} alt="img" className={classes.bannerImage} />
+      <img src={data.bannerImage.file.url} alt={data?.bannerImage?.description} className={classes.bannerImage} />
       <div className={classes.section}>
         <Grid
           container
@@ -41,7 +41,7 @@ export default function Banner({ data }) {
             alignItems="flex-start"
           >
             { data.bannerLogo
-              && <img src={data.bannerLogo.file.url} alt="Banner Logo" />}
+              && <img src={data.bannerLogo.file.url} alt={data?.bannerLogo?.description} />}
           </Grid>
           <Grid
             container

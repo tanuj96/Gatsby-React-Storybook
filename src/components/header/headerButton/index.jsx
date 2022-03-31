@@ -5,7 +5,7 @@ import { themeStyles } from '../../../styles';
 import ThemeContext from '../../../utils/theme-context';
 
 export default function HeaderButton({
-  headerButton, logout, siteType, isAst
+  headerButton, isAst
 }) {
   const partnerTheme = useContext(ThemeContext);
   const classes = myStyles();
@@ -22,35 +22,20 @@ export default function HeaderButton({
   }
   return (
     <div className={classes.HeaderButtonRes}>
-      { siteType === 'rmr' && (
-        <Link to={showModal} tabindex="-1">
-          <BootstrapButton
-            // variant={partnerTheme?.buttonStyle?.buttonType || 'contained'}
-            variant={variantVal}
-            color="primary"
-            disableRipple
-            className={globalthemClasses.button}
-            onClick={() => {
-              navigateToPage(showModal);
-            }}
-          >
-            {headerButton.label}
-          </BootstrapButton>
-        </Link>
-      )}
-      {siteType !== 'rmr' && (
+      <Link to={showModal} tabindex="-1">
         <BootstrapButton
-          variant={partnerTheme?.buttonStyle?.buttonType || 'contained'}
+            // variant={partnerTheme?.buttonStyle?.buttonType || 'contained'}
+          variant={variantVal}
           color="primary"
           disableRipple
           className={globalthemClasses.button}
           onClick={() => {
-            logout();
+            navigateToPage(showModal);
           }}
         >
           {headerButton.label}
         </BootstrapButton>
-      )}
+      </Link>
     </div>
   );
 }

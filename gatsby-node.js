@@ -1,4 +1,6 @@
+/* eslint-disable global-require */
 /* eslint-disable max-len */
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 const path = require('path');
 const searchIndexing = require('./search-util');
 
@@ -291,6 +293,13 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         boxShadowHorizontalPosition
         boxShadowVerticalPosition
       }
+       favIcon{
+          favIcon{
+              file{
+                 url
+                 }
+               }
+      }
       entryTitle
       partnerId
       googleTagManagerId
@@ -330,6 +339,14 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         footerTextColor
         footerLinkColor
         svgIconColor
+        customHeadingFont {
+          fontFamilyName
+          fontUrl {
+            file {
+              url
+            }
+          }
+        }
       }
       astThemeTypography {
         astFontFamily
@@ -439,6 +456,33 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   reporter.success('Query fetched Successfully');
 
+  const fs = require('fs');
+  const https = require('https');
+
+  // const url = `https:${query?.data?.contentfulPartnerTheme?.typography?.customHeadingFont?.fontUrl[0].file.url}`;
+  const url = `https:${query?.data?.contentfulPartnerTheme?.favIcon?.favIcon.file.url}`;
+  https.get(url, (res) => {
+    // const fontPath = `${__dirname}/static/${query?.data.contentfulPartnerTheme?.typography?.customHeadingFont.fontFamilyName}.otf`;
+    // const filePath = fs.createWriteStream(fontPath);
+
+    const favIconPath = `${__dirname}/static/favicon.ico`;
+    const favIconPathBuild = `${__dirname}/public/favicon.ico`;
+    const filePath = fs.createWriteStream(favIconPath);
+    const filePathBuild = fs.createWriteStream(favIconPathBuild);
+
+    res.pipe(filePath);
+    res.pipe(filePathBuild);
+    filePath.on('finish', () => {
+      filePath.close();
+      console.log('Download Completed');
+    });
+
+    filePathBuild.on('finish', () => {
+      filePathBuild.close();
+      console.log('Download Completed in Build');
+    });
+  });
+  
   const sitemapLinks = [];
 
   // Adding Homepage to Sitemap Links
@@ -842,3 +886,21 @@ exports.onPostBuild = async ({ reporter }) => {
   await searchIndexing(reporter, searchablePages);
   reporter.info('Your Gatsby site has been built!');
 };
+
+
+// favIcon{
+//   favIcon{
+//     file{
+//       url
+//     }
+//   }
+// }
+
+// customHeadingFont {
+//   fontFamilyName
+//   fontUrl {
+//     file {
+//       url
+//     }
+//   }
+// }

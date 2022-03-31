@@ -68,11 +68,11 @@ export const useStyles = makeStyles((theme) => ({
   carouselBtn: () => ({
     top: 'calc(14% - 20px) !important'
   }),
-  heading: () => ({
+  heading: (data) => ({
     width: ' 100%',
     padding: '0px',
     margin: '0px',
-    fontSize: '26px',
+    fontSize: `${data?.typography?.bodyFontSize}em` || '1.625em',
     fontWeight: '300',
     lineHeight: '1.3'
   })

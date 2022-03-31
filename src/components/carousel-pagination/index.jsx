@@ -13,11 +13,10 @@ import { themeStyles } from '../../styles';
 import ThemeContext from '../../utils/theme-context';
 
 export default function CarouselPagination({ data }) {
-  const filename = data.image.file.url.substring(data.image.file.url.lastIndexOf('/') + 1);
   const [quoteItems] = useState(data.quoteItems);
   const [cardValue, setCardValue] = useState(0);
-  const classes = customStyles();
   const partnerTheme = useContext(ThemeContext);
+  const classes = customStyles(partnerTheme);
   const globalthemClasses = themeStyles(partnerTheme);
   return (
     <section className={classes.main}>
@@ -63,7 +62,7 @@ export default function CarouselPagination({ data }) {
 
         </Grid>
         <Grid item sm={6} md={6}>
-          <img className={classes.carouselPagImage} alt={filename} src={`https:${data.image.file.url}`} />
+          <img className={classes.carouselPagImage} src={`https:${data.image.file.url}`} alt={data.image.description} />
         </Grid>
       </Grid>
     </section>

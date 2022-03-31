@@ -21,7 +21,11 @@ export default function Lists({ data }) {
             <ListItem alignItems="flex-start" className={classes.listItem}>
               <Grid container>
                 <Grid container xs={12} sm={2} md={2} lg={2} alignItems="center" justifyContent="center">
-                  <img alt="listimage" src={list?.listBody[0].image.file?.url} alt={list?.listBody[0].image.file?.url.substring(list?.listBody[0].image.file?.url.lastIndexOf('/') + 1)} className={classes.listImage} />
+                  <img
+                    src={list?.listBody[0].image.file?.url}
+                    alt={list?.listBody[0].image.description}
+                    className={classes.listImage}
+                  />
                 </Grid>
                 <Grid container xs={12} sm={10} md={10} lg={10} alignItems="flex-start">
                   <ListItemText

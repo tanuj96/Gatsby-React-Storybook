@@ -34,7 +34,7 @@ export default function Header({
         {!isMobile ? (
           <div className={classes.InnerContainer}>
 
-            <div className={classes.headerRight} style={siteType === 'rmr' ? { flex: '1 1 auto' } : { flex: 'inherit' }}>
+            <div className={classes.headerRight} style={{ flex: '1 1 auto' }}>
               <HeaderLogo primaryLogo={navigation.primaryLogoHeader} siteTypeLogo={siteType} />
               {navigation.menus && <HeaderMenu menuData={navigation.menus} />}
             </div>
@@ -107,7 +107,7 @@ export default function Header({
                     <div className={classes.menuWhiteSection}>
                       <HeaderButton headerButton={navigation.buttonAction} logout={logout} ast={astData} siteType={siteType} />
                       { contactForm && <ContactDialogs metadata={siteMetadata} contactFormDetails={contactForm} /> }
-                      {/* <Search /> */}
+                      {isSearchEnabled && <Search />}
                       {navigation.menus && <HeaderMenu menuData={navigation.menus} />}
                     </div>
                   </Box>
