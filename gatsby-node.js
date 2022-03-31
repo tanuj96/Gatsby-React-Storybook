@@ -1,6 +1,5 @@
 /* eslint-disable global-require */
 /* eslint-disable max-len */
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 const path = require('path');
 const searchIndexing = require('./search-util');
 
