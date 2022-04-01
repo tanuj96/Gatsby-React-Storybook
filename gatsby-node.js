@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
+
 const path = require('path');
 const searchIndexing = require('./search-util');
+const favIcon = require('./download-favIcon');
 
 const searchablePages = [];
 
@@ -292,13 +294,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         boxShadowHorizontalPosition
         boxShadowVerticalPosition
       }
-      favIcon{
-        favIcon{
-            file{
-               url
-               }
-             }
-    }
       entryTitle
       partnerId
       googleTagManagerId
@@ -315,6 +310,13 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         gridSpacing
         gridJustifyContent
         gridAlignments
+      }
+      favIcon{
+        favIcon{
+            file{
+               url
+               }
+             }
       }
       typography {
         bodyFontSize
@@ -449,27 +451,13 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }`);
 
   reporter.success('Query fetched Successfully');
+  // process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 
-  const fs = require('fs');
-  const https = require('https');
-
+  // Download favicon
   const url = `https:${query?.data?.contentfulPartnerTheme?.favIcon?.favIcon.file.url}`;
-  https.get(url, (res) => {
-    const favIconPath = `${__dirname}/static/favicon.ico`;
-    const favIconPathBuild = `${__dirname}/public/favicon.ico`;
-    const filePath = fs.createWriteStream(favIconPath);
-    const filePathBuild = fs.createWriteStream(favIconPathBuild);
-
-    res.pipe(filePath);
-    res.pipe(filePathBuild);
-    filePath.on('finish', () => {
-      filePath.close();
-    });
-
-    filePathBuild.on('finish', () => {
-      filePathBuild.close();
-    });
-  });
+  if (query?.data?.contentfulPartnerTheme?.favIcon?.favIcon.file.url) {
+    favIcon(url);
+  }
 
   const sitemapLinks = [];
 
