@@ -451,13 +451,20 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   }`);
 
   reporter.success('Query fetched Successfully');
-  // process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 
   // Download favicon
   const url = `https:${query?.data?.contentfulPartnerTheme?.favIcon?.favIcon.file.url}`;
-  if (query?.data?.contentfulPartnerTheme?.favIcon?.favIcon.file.url) {
-    favIcon(url);
+  // if (query?.data?.contentfulPartnerTheme?.favIcon?.favIcon.file.url) {
+  //   favIcon(url);
+  // }
+
+  async function asyncCall() {
+    if (query?.data?.contentfulPartnerTheme?.favIcon?.favIcon.file.url) {
+      await favIcon(url);
+    }
   }
+  asyncCall();
 
   const sitemapLinks = [];
 
