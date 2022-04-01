@@ -4,6 +4,7 @@ import React from 'react';
 // eslint-disable-next-line import/prefer-default-export
 export const onRenderBody = ({ setHeadComponents }) => {
   setHeadComponents([
+    <script key="trust-arc" type="text/javascript" src="./src/trustarc.js" />,
     <script key="cartus-qumu" type="text/javascript" src="https://cartus.qumucloud.com/widgets/application.js" />
   ]);
 };

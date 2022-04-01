@@ -55,7 +55,7 @@ UnitTest:
   rules:
     - if:  $CI_PIPELINE_SOURCE != "trigger"
 
-Build: 
+.Build: &Build
   stage: Build
   script: 
     - echo $GATSBY_LEAD_FORM_SUBMIT_URL
@@ -75,6 +75,62 @@ Build:
   image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest 
   after_script:
     - aws cloudfront create-invalidation --distribution-id $DISTRIBUTION_ID --paths "/*"
+
+Build_DEV:
+  environment: Development
+  extends:
+    - .Build
+  rules:
+    - if: ($CI_COMMIT_BRANCH =~ /^feature\// || $CI_COMMIT_BRANCH =~ /^bugfix\// || $CI_COMMIT_BRANCH == "develop")
+
+Build_TST:
+  environment: Test
+  extends:
+    - .Build
+  rules: 
+    - if: ($CI_COMMIT_BRANCH == "develop" || $CI_COMMIT_BRANCH =~ /^release\//)
+
+Build_STG:
+  environment: Staging
+  extends:
+    - .Build
+  rules:
+    - if: ($CI_COMMIT_BRANCH =~ /^release\//)
+
+Build_TRN:
+  environment: Training
+  extends:
+    - .Build
+  rules:
+    - if:  ($CI_COMMIT_BRANCH =~ /^release\//)
+
+Build_PRD:
+  environment: Production
+  extends:
+    - .Build
+  rules:
+    - if:  ($CI_COMMIT_BRANCH == "master")
+
+Build_DEV_AR:
+  environment: DevelopmentAR
+  extends:
+    - .Build
+  rules:
+    - if:  ($CI_COMMIT_BRANCH =~ /^hotfix\//)
+
+Build_TST_AR:
+  environment: TestAR
+  extends:
+    - .Build
+  rules:
+    - if: ($CI_COMMIT_BRANCH =~ /^hotfix\//)
+
+Build_STG_AR:
+  environment: StagingAR
+  extends:
+    - .Build
+  rules:
+    - if: ($CI_COMMIT_BRANCH =~ /^hotfix\//)
 
 Deploy_DEV: 
   stage: Deploy_DEV

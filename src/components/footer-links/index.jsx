@@ -36,9 +36,7 @@ export default function FooterLinks({ data }) {
               );
             })}
             <span id="teconsent" className={classes.cookieLink} />
-            <Helmet>
-              <script async="async" src="//consent.trustarc.com/notice?domain=realogyleadsgroup.com&c=teconsent&js=nj&noticeType=bb&text=true&gtm=1&privacypolicylink=https%3A%2F%2Fapfmrealestatebenefits.com%2Fprivacy" crossOrigin />
-            </Helmet>
+            <script async="async" src="//consent.trustarc.com/notice?domain=realogyleadsgroup.com&c=teconsent&js=nj&noticeType=bb&text=true&gtm=1&privacypolicylink=https%3A%2F%2Fapfmrealestatebenefits.com%2Fprivacy" crossOrigin />
           </Grid>
         </Grid>
       </Container>

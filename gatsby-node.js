@@ -1,4 +1,3 @@
-/* eslint-disable global-require */
 /* eslint-disable max-len */
 const path = require('path');
 const searchIndexing = require('./search-util');
@@ -293,13 +292,13 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         boxShadowHorizontalPosition
         boxShadowVerticalPosition
       }
-       favIcon{
-          favIcon{
-              file{
-                 url
-                 }
+      favIcon{
+        favIcon{
+            file{
+               url
                }
-      }
+             }
+    }
       entryTitle
       partnerId
       googleTagManagerId
@@ -465,12 +464,10 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     res.pipe(filePathBuild);
     filePath.on('finish', () => {
       filePath.close();
-      console.log('Download Completed');
     });
 
     filePathBuild.on('finish', () => {
       filePathBuild.close();
-      console.log('Download Completed in Build');
     });
   });
 
